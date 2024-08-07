@@ -1,34 +1,44 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+const [vize1, setVize1] = useState(0);
+const [vize2, setVize2] = useState(0);
+const [ortalama, setOrtalama] = useState(null);
+
+const ortalamabul = ()=>{
+  let toplamSonuc = topla()/2;
+  yazdir (toplamSonuc);
+  setOrtalama(toplamSonuc);
+}
+
+const topla=() =>{
+  const toplam= vize1 + vize2;
+  return toplam;  
+}
+
+const yazdir = (sonuc) =>{
+  console.log("Ortalama : " + sonuc)
+}
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>celalcan</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+  <>
+<div>
+  <input type="number" value={vize1}  onChange={(e)=> setVize1(Number(e.target.value))} />
+</div>
+<div>
+  <input type="number" value={vize2}  onChange={(e)=> setVize2(Number(e.target.value))} />
+</div>
+<div>
+  <button onClick={ortalamabul}>Ortalama Bul</button>
+</div>
+
+<div>
+{ortalama !== null && <p>Ortalama: {ortalama}</p>} {/* Ortalama sonucu burada yazdır */}
+</div> 
+
+<s></s>
+  </>
   )
 }
 
