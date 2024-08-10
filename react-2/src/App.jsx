@@ -1,45 +1,54 @@
-import { useState } from 'react'
+import { useEffect} from 'react'
 import './App.css'
+import axios from 'axios'
+
+const BASE_URL ="http://localhost:3005";
 
 function App() {
-const [vize1, setVize1] = useState(0);
-const [vize2, setVize2] = useState(0);
-const [ortalama, setOrtalama] = useState(null);
 
-const ortalamabul = ()=>{
-  let toplamSonuc = topla()/2;
-  yazdir (toplamSonuc);
-  setOrtalama(toplamSonuc);
+const getAllUsers=async()=>{
+ const response =  await axios.get(BASE_URL+"/users");
+  console.log(response.data)
 }
 
-const topla=() =>{
-  const toplam= vize1 + vize2;
-  return toplam;  
+const getUserById = async(userId)=>{
+ const response = await axios.get(BASE_URL+"/users/"+userId)
+ console.log(response.data)
 }
 
-const yazdir = (sonuc) =>{
-  console.log("Ortalama : " + sonuc)
+const createUser = async(newUser)=>{
+const response = await axios.post(`${BASE_URL}/users`,newUser)
+console.log("response", response.data)
 }
 
-  return (
-  <>
-<div>
-  <input type="number" value={vize1}  onChange={(e)=> setVize1(Number(e.target.value))} />
-</div>
-<div>
-  <input type="number" value={vize2}  onChange={(e)=> setVize2(Number(e.target.value))} />
-</div>
-<div>
-  <button onClick={ortalamabul}>Ortalama Bul</button>
-</div>
-
-<div>
-{ortalama !== null && <p>Ortalama: {ortalama}</p>} {/* Ortalama sonucu burada yazdır */}
-</div> 
-
-<s></s>
-  </>
-  )
+const updateUser = async(userId,updateUser) => {
+  // `` bu işareti yapabilmek için AltGr + virgüle iki kere basılır
+  await axios.put(`${BASE_URL}/users/${userId}`,updateUser)
 }
+
+const deleteUserById = async (userId)=>
+{
+ const deletedResponse = await axios.delete(`${BASE_URL}/users/${userId}`)
+ console.log(deletedResponse.data)
+}
+
+useEffect(()=>{
+  deleteUserById("2")
+  // getAllUsers
+  // getUserById(1);
+  // const newUser = {
+  //   "username" : "celalcan",
+  //   "password" : "4357"
+  // }
+  // createUser(newUser);
+  // updateUser("c397", {
+  //   "username" : "gülcan",
+  //   "password" : "334"
+  // })
+
+},[])
+
+
+ }
 
 export default App
